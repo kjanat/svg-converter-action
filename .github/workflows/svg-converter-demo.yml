@@ -4,6 +4,16 @@ permissions:
   contents: read
   actions: write
 
+# Prevent concurrent runs of the same workflow
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Set default shell with proper error handling
+defaults:
+  run:
+    shell: bash -o pipefail -u {0}
+
 on:
   push:
     paths:
@@ -26,6 +36,7 @@ jobs:
   setup:
     name: 📋 Setup Environment
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       svg-file: ${{ steps.setup.outputs.svg-file }}
       debug: ${{ steps.setup.outputs.debug }}
@@ -57,6 +68,7 @@ jobs:
   basic-conversion:
     name: 📐 Basic Multi-Format Conversion
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: setup
     steps:
       - name: Checkout repository
@@ -91,6 +103,7 @@ jobs:
   performance-demo:
     name: ⚡ High-Performance PNG Generation
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: setup
     steps:
       - name: Checkout repository
@@ -125,6 +138,7 @@ jobs:
   typescript-demo:
     name: 🔷 TypeScript React Components
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: setup
     steps:
       - name: Checkout repository
@@ -176,6 +190,7 @@ jobs:
   favicon-demo:
     name: 🌐 Comprehensive Favicon Generation
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: setup
     steps:
       - name: Checkout repository
@@ -235,6 +250,7 @@ jobs:
   security-demo:
     name: 🛡️ Security & Validation Demo
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: setup
     steps:
       - name: Checkout repository
@@ -281,6 +297,7 @@ jobs:
   summary:
     name: 📋 Results Summary
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs:
       [
         setup,

@@ -647,6 +647,8 @@ validate_file_count() {
 
 # Set GitHub Actions outputs
 set_outputs() {
+    local conversion_time=$1
+
     # Only set outputs if we're in GitHub Actions environment
     if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
         local files_json
@@ -661,6 +663,7 @@ set_outputs() {
         # Set outputs
         {
             echo "files-created=$files_json"
+            echo "conversion-time=$conversion_time"
             echo "summary<<EOF"
             echo "$summary_text"
             echo "EOF"
@@ -741,11 +744,13 @@ main() {
         exit 1
     fi
 
-    set_outputs
-
+    # Calculate conversion time before setting outputs
     local end_time duration
     end_time=$(date +%s)
     duration=$((end_time - start_time))
+
+    # Set GitHub Actions outputs with conversion time
+    set_outputs "$duration"
 
     log_success "🎉 Conversion completed in ${duration}s! Created ${#CREATED_FILES[@]} files."
 
