@@ -60,7 +60,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Convert SVG to all formats
         id: basic
@@ -81,7 +81,7 @@ jobs:
           echo "${{ steps.basic.outputs.summary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload basic conversion artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: basic-conversion-outputs
           path: dist/basic/
@@ -94,7 +94,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Generate multiple PNG sizes (parallel processing)
         id: performance
@@ -115,7 +115,7 @@ jobs:
           echo "${{ steps.performance.outputs.summary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload performance demo artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: performance-demo-outputs
           path: dist/performance/
@@ -128,7 +128,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Generate TypeScript React components
         id: typescript
@@ -166,7 +166,7 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload TypeScript demo artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: typescript-demo-outputs
           path: dist/typescript/
@@ -179,7 +179,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Generate comprehensive favicon set
         id: favicon
@@ -225,7 +225,7 @@ jobs:
           echo "**HTML snippet generated:** \`dist/favicon/favicon-snippet.html\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload favicon demo artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: favicon-demo-outputs
           path: dist/favicon/
@@ -238,7 +238,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Test with valid input
         id: valid
@@ -271,7 +271,7 @@ jobs:
           fi
 
       - name: Upload security demo artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: security-demo-outputs
           path: dist/security/
@@ -293,7 +293,7 @@ jobs:
     if: always()
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Create comprehensive summary
         run: |
