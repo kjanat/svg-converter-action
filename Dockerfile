@@ -1,4 +1,4 @@
-FROM node:24-alpine
+FROM oven/bun:latest as base
 
 # Build argument for version (can be overridden during build)
 ARG VERSION=1.0.8
@@ -10,11 +10,6 @@ LABEL maintainer="kjanat" \
 
 # Copy VERSION file for runtime reference
 COPY VERSION /tmp/VERSION
-
-# Enable pnpm
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
 
 # Create non-root user early for security
 RUN addgroup -g 1001 svguser && \
@@ -57,12 +52,12 @@ RUN apk add --no-cache \
     && rm -rf /var/cache/apk/*
 
 # Copy package files for dependency installation
-COPY --chown=svguser:svguser package.json pnpm-lock.yaml* /app/
+COPY --chown=svguser:svguser package.json bun.lock* /app/
 
 # Switch to app directory and install dependencies
 WORKDIR /app
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store,uid=1001,gid=1001 \
-    pnpm install --frozen-lockfile --prod
+RUN --mount=type=cache,id=bun,target=/root/.bun/install/cache,uid=1001,gid=1001 \
+    bun install --frozen-lockfile --production
 
 # Copy application code after dependencies are installed
 COPY --chown=svguser:svguser . /app/
