@@ -8,57 +8,57 @@ branding:
 
 inputs:
   svg-path:
-    description: "Path to the SVG file to convert"
+    description: "Path to the SVG file to convert. Must be a valid file path without directory traversal (..)"
     required: true
 
   output-dir:
-    description: "Directory to output converted files"
+    description: "Directory to output converted files. Will be created if it doesn't exist"
     required: false
     default: "./"
 
   formats:
-    description: "Comma-separated list of formats to generate: ico,png,react,react-native"
+    description: "Comma-separated list of formats to generate: ico,png,react,react-native. Default includes all formats"
     required: false
     default: "ico,png,react,react-native"
 
   png-sizes:
-    description: 'Comma-separated list of PNG sizes (e.g., "16,32,64,128,256")'
+    description: "Comma-separated list of PNG sizes in pixels (1-4096px). Example: 16,32,64,128,256. Default: 16,32,64,128,256"
     required: false
     default: "16,32,64,128,256"
 
   ico-sizes:
-    description: 'Comma-separated list of ICO sizes (e.g., "16,32,48,64")'
+    description: "Comma-separated list of ICO sizes in pixels. Supported: 16, 32, 48, 64. Default: 16,32,48,64"
     required: false
     default: "16,32,48,64"
 
   base-name:
-    description: "Base name for output files (without extension). If not provided, uses SVG filename"
+    description: "Base name for output files (without extension). If not provided, uses SVG filename without path and extension"
     required: false
 
   react-typescript:
-    description: "Generate TypeScript React components instead of JS"
+    description: "Generate TypeScript React components (.tsx) instead of JavaScript (.jsx). Set to 'true' or 'false'"
     required: false
     default: "false"
 
   react-props-interface:
-    description: "Interface name for React component props"
+    description: "TypeScript interface name for React component props. Used when react-typescript is 'true'. Default: SVGProps"
     required: false
     default: "SVGProps"
 
   debug:
-    description: "Enable debug output for troubleshooting"
+    description: "Enable detailed debug output for troubleshooting. Outputs created files list and detailed conversion info. Set to 'true' or 'false'"
     required: false
     default: "false"
 
 outputs:
   files-created:
-    description: "JSON array of created file paths"
+    description: "JSON array of all created file paths relative to output directory. Empty array if conversion failed"
 
   summary:
-    description: "Human-readable summary of conversion results"
+    description: "Human-readable summary of conversion results including number of files created and format details"
 
   conversion-time:
-    description: "Time taken for conversion in seconds"
+    description: "Time taken for conversion in seconds (integer). Useful for performance monitoring"
 
 runs:
   using: "docker"

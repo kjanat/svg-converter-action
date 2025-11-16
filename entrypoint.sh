@@ -673,6 +673,25 @@ set_outputs() {
     fi
 }
 
+# Set error outputs when conversion fails
+set_error_outputs() {
+    local error_message=$1
+    local conversion_time=${2:-0}
+
+    # Only set outputs if we're in GitHub Actions environment
+    if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
+        {
+            echo "files-created=[]"
+            echo "conversion-time=$conversion_time"
+            echo "summary<<EOF"
+            echo "Conversion failed: $error_message"
+            echo "EOF"
+        } >>"$GITHUB_OUTPUT"
+
+        log_debug "GitHub Actions error outputs set"
+    fi
+}
+
 # Main conversion function
 main() {
     local start_time
@@ -689,14 +708,17 @@ main() {
     # Get and validate inputs
     if ! get_validated_inputs; then
         log_error "Input validation failed"
+        set_error_outputs "Input validation failed"
         exit 1
     fi
 
     if ! validate_inputs; then
+        set_error_outputs "Input validation failed"
         exit 1
     fi
 
     if ! validate_file_count; then
+        set_error_outputs "File count validation failed"
         exit 1
     fi
 
@@ -741,6 +763,8 @@ main() {
     # Check if any conversions failed
     if ((conversion_errors > 0)); then
         log_error "$conversion_errors conversion(s) failed"
+        local end_time=$(($(date +%s) - start_time))
+        set_error_outputs "Conversion failed for $conversion_errors file(s)" "$end_time"
         exit 1
     fi
 

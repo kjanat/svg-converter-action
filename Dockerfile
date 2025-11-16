@@ -6,7 +6,12 @@ ARG VERSION=1.0.8
 # Set metadata
 LABEL maintainer="kjanat" \
     description="SVG Converter - Convert SVG files to multiple formats" \
-    version="${VERSION}"
+    version="${VERSION}" \
+    org.opencontainers.image.source="https://github.com/kjanat/svg-converter-action" \
+    org.opencontainers.image.documentation="https://github.com/kjanat/svg-converter-action#readme" \
+    org.opencontainers.image.title="SVG Converter" \
+    org.opencontainers.image.description="High-performance GitHub Action for converting SVG files to ICO, PNG, React components" \
+    org.opencontainers.image.authors="kjanat"
 
 # Copy VERSION file for runtime reference
 COPY VERSION /tmp/VERSION
