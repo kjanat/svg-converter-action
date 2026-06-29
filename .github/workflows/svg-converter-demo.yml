@@ -81,7 +81,7 @@ jobs:
           echo "${{ steps.basic.outputs.summary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload basic conversion artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: basic-conversion-outputs
           path: dist/basic/
@@ -115,7 +115,7 @@ jobs:
           echo "${{ steps.performance.outputs.summary }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload performance demo artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: performance-demo-outputs
           path: dist/performance/
@@ -166,7 +166,7 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload TypeScript demo artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: typescript-demo-outputs
           path: dist/typescript/
@@ -225,7 +225,7 @@ jobs:
           echo "**HTML snippet generated:** \`dist/favicon/favicon-snippet.html\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload favicon demo artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: favicon-demo-outputs
           path: dist/favicon/
@@ -271,7 +271,7 @@ jobs:
           fi
 
       - name: Upload security demo artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: security-demo-outputs
           path: dist/security/
